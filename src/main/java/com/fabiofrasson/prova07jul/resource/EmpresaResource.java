@@ -26,11 +26,6 @@ public class EmpresaResource {
     return ResponseEntity.ok(service.listarTodas());
   }
 
-  @GetMapping(path = "/produtos/{id}")
-  public Set<Produto> listarProdutosEmpresa(@PathVariable("id") Long id) {
-    return service.listarProdutosEmpresa(id);
-  }
-
   @GetMapping(path = "/{id}")
   public ResponseEntity<Empresa> acharPorId(@PathVariable("id") Long id) {
     return ResponseEntity.ok(service.findByIdOrThrowBadRequestException(id));

@@ -30,11 +30,6 @@ public class EmpresaService {
     return repository.findAll();
   }
 
-  public Set<Produto> listarProdutosEmpresa(Long id) {
-    Optional<Empresa> empresa = repository.findById(id);
-    return empresa.get().getProdutos();
-  }
-
   public Empresa findByIdOrThrowBadRequestException(Long id) {
     return repository
         .findById(id)

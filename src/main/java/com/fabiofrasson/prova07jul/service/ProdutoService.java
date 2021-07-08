@@ -1,9 +1,11 @@
 package com.fabiofrasson.prova07jul.service;
 
+import com.fabiofrasson.prova07jul.domain.Empresa;
 import com.fabiofrasson.prova07jul.domain.Produto;
 import com.fabiofrasson.prova07jul.dto.ProdutoDto;
 import com.fabiofrasson.prova07jul.exception.BadRequestException;
 import com.fabiofrasson.prova07jul.modelMapper.ModelMapperConfig;
+import com.fabiofrasson.prova07jul.repository.EmpresaRepository;
 import com.fabiofrasson.prova07jul.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,10 +17,12 @@ public class ProdutoService {
 
   private final ProdutoRepository repository;
   private final ModelMapperConfig modelMapper;
+  private final EmpresaService service;
 
-  public ProdutoService(ProdutoRepository repository, ModelMapperConfig modelMapper) {
+  public ProdutoService(ProdutoRepository repository, ModelMapperConfig modelMapper, EmpresaRepository empresaRepository, EmpresaService service) {
     this.repository = repository;
     this.modelMapper = modelMapper;
+    this.service = service;
   }
 
   public List<Produto> listarTodos() {
@@ -30,6 +34,11 @@ public class ProdutoService {
         .findById(id)
         .orElseThrow(
             () -> new BadRequestException("Produto não encontrado, por favor tente novamente"));
+  }
+
+  public List<Produto> procurarPorEmpresa(Long idEmpresa) {
+    Empresa empresa = service.findByIdOrThrowBadRequestException(idEmpresa);
+    return repository.findByEmpresa(empresa);
   }
 
   @Transactional

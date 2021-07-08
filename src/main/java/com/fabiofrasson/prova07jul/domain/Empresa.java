@@ -1,11 +1,9 @@
 package com.fabiofrasson.prova07jul.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Empresa implements Serializable {
@@ -17,7 +15,8 @@ public class Empresa implements Serializable {
 
   private String nome;
 
-  @OneToMany private Set<Produto> produtos = new HashSet<>();
+  @OneToMany(mappedBy = "empresa")
+  private List<Produto> produtos = new ArrayList<>();
 
   public Empresa() {}
 
@@ -28,6 +27,12 @@ public class Empresa implements Serializable {
   public Empresa(Long id, String nome) {
     this.id = id;
     this.nome = nome;
+  }
+
+  public Empresa(Long id, String nome, List<Produto> produtos) {
+    this.id = id;
+    this.nome = nome;
+    this.produtos = produtos;
   }
 
   public Long getId() {
@@ -46,11 +51,11 @@ public class Empresa implements Serializable {
     this.nome = nome;
   }
 
-  public Set<Produto> getProdutos() {
+  public List<Produto> getProdutos() {
     return produtos;
   }
 
-  public void setProdutos(Set<Produto> produtos) {
+  public void setProdutos(List<Produto> produtos) {
     this.produtos = produtos;
   }
 }

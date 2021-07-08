@@ -29,6 +29,12 @@ public class ProdutoResource {
     return ResponseEntity.ok(service.findByIdOrThrowBadRequestException(id));
   }
 
+  @GetMapping(path = "/empresa/{idEmpresa}")
+  public ResponseEntity<List<Produto>> procurarPorEmpresa(@PathVariable("idEmpresa") Long idEmpresa) {
+    List<Produto> produtos = service.procurarPorEmpresa(idEmpresa);
+    return ResponseEntity.ok(produtos);
+  }
+
   @PostMapping
   public ResponseEntity<String> salvar(@RequestBody Produto produto) {
     return new ResponseEntity<>(service.salvar(produto), HttpStatus.CREATED);

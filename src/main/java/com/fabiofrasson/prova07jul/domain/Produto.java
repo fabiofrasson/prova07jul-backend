@@ -17,7 +17,9 @@ public class Produto implements Serializable {
   private String nome;
   private BigDecimal preco;
 
-  @ManyToOne private Empresa empresa;
+  @JsonIgnore
+  @ManyToOne
+  @JoinColumn(name = "idEmpresa")private Empresa empresa;
 
   public Produto() {}
 
